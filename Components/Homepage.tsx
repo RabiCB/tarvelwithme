@@ -37,7 +37,7 @@ function MyVerticallyCenteredModal(props: any) {
         onClick={props?.close}
         className="h-10 w-10  absolute cursor-pointer  right-[-60px] "
       >
-        <IoMdClose size={32}  className="z-50 " />
+        <IoMdClose size={32}  color="white" className="z-50 " />
       </div>
 
       <div className="w-full  min-h-[400px] rounded-full">
@@ -85,21 +85,22 @@ function Items({ currentItems }: Iprops) {
         {currentItems &&
           currentItems.map((item) => (
             <div
-              onClick={() => {
-                setSelectedimg(item?.image);
-                setOpenmodal(true);
-              }}
-              className="group/item relative cursor-pointer "
+             
+              className="group/item relative"
               key={item?._id}
             >
               <img
+               onClick={() => {
+                setSelectedimg(item?.image);
+                setOpenmodal(true);
+              }}
                 alt={`image of ${item?.title}`}
                 src={item?.image ?? " "}
-                className="rounded-md object-cover w-full aspect-auto h-[300px]"
+                className="rounded-md object-cover w-full h-[280px]"
               />
 
-              <div className="absolute right-2 bottom-8 group/edit invisible group-hover/item:visible  ease-in-out transition">
-                <button className="  inline-flex items-center   px-2">
+              <div  className="absolute right-2 bottom-2 z-50 group-hover/item:block hidden ease-in-out transition">
+                <button  className="inline-flex items-center px-2">
                   <MdDownload
                     onClick={() => handleDownloadImage(item?.image)}
                     size={32}
