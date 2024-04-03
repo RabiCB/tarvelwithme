@@ -1,8 +1,10 @@
-"use client"
-import type { Metadata } from "next";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { useEffect } from "react";
+
 
 const inter = Inter({ subsets: ["latin"] });
 

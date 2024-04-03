@@ -1,9 +1,11 @@
 "use client";
-
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { MdDownload } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
 interface Iprops {
   currentItems: {
     _id: number;
@@ -19,6 +21,31 @@ interface dataprops {
   }[];
 }
 
+function MyVerticallyCenteredModal(props: any) {
+  return (
+    <Modal
+      show={props?.open}
+      size="lg"
+      onHide={props?.close}
+      onEscapeKeyDown={props?.close}
+      className="rounded-lg"
+      contentClassName="rounded-lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <div
+        onClick={props?.close}
+        className="h-10 w-10  absolute cursor-pointer  right-[-60px] "
+      >
+        <IoMdClose size={32}  className="z-50 " />
+      </div>
+
+      <div className="w-full  min-h-[400px] rounded-full">
+        <img src={props?.img} className="w-full min-h-[400px] object-contain" />
+      </div>
+    </Modal>
+  );
+}
 function Items({ currentItems }: Iprops) {
   const handleDownloadImage = (imageUrl: string) => {
     fetch(imageUrl)
@@ -33,44 +60,57 @@ function Items({ currentItems }: Iprops) {
         link.setAttribute("download", filename);
         document.body.appendChild(link);
 
-        
         link.click();
 
-     
         link?.parentNode?.removeChild(link);
-
-        
-      
       })
       .catch((error) => {
         console.error("Error downloading image:", error);
       });
   };
 
-  return (
-    <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-2 w-full p-4">
-      {currentItems &&
-        currentItems.map((item) => (
-          <div className="group/item relative cursor-pointer " key={item?._id}>
-            <img
-              alt={`image of ${item?.title}`}
-              src={item?.image ?? " "}
-              className="rounded-md object-cover w-full aspect-auto h-[300px]"
-            />
+  const [selected, setSelectedimg] = useState<string>("");
+  const [openmodal, setOpenmodal] = useState(false);
 
-            <div className="absolute right-2 bottom-8 group/edit invisible group-hover/item:visible  ease-in-out transition">
-              <button className="  inline-flex items-center   px-2">
-                {" "}
-                <MdDownload
-                  onClick={() => handleDownloadImage(item?.image)}
-                  size={32}
-                  className="mr-1 text-gray-700"
-                />{" "}
-              </button>
+  return (
+    <>
+      {selected && openmodal && (
+        <MyVerticallyCenteredModal
+          open={openmodal}
+          close={() => setOpenmodal(false)}
+          img={selected}
+        />
+      )}
+      <div className="grid grid-cols-3 gap-8 max-lg:grid-cols-2 w-full p-4">
+        {currentItems &&
+          currentItems.map((item) => (
+            <div
+              onClick={() => {
+                setSelectedimg(item?.image);
+                setOpenmodal(true);
+              }}
+              className="group/item relative cursor-pointer "
+              key={item?._id}
+            >
+              <img
+                alt={`image of ${item?.title}`}
+                src={item?.image ?? " "}
+                className="rounded-md object-cover w-full aspect-auto h-[300px]"
+              />
+
+              <div className="absolute right-2 bottom-8 group/edit invisible group-hover/item:visible  ease-in-out transition">
+                <button className="  inline-flex items-center   px-2">
+                  <MdDownload
+                    onClick={() => handleDownloadImage(item?.image)}
+                    size={32}
+                    className="mr-1 text-gray-700"
+                  />
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-    </div>
+          ))}
+      </div>
+    </>
   );
 }
 
@@ -83,7 +123,7 @@ const Homepage = ({ data }: dataprops) => {
     const newOffset = (event.selected * 8) % data.length;
 
     setItemOffset(newOffset);
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
   };
   return (
     <div className="flex flex-col w-full relative ">
@@ -91,7 +131,6 @@ const Homepage = ({ data }: dataprops) => {
       <ReactPaginate
         className="flex h-6 text-lg absolute bottom-[-30px] w-full  gap-8 justify-center items-center mb-4 "
         breakLabel="..."
-        
         nextLabel={<GrNext size={18} />}
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
