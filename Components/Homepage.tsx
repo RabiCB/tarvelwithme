@@ -99,10 +99,10 @@ function Items({ currentItems }: Iprops) {
                 className="rounded-md object-cover w-full h-[280px]"
               />
 
-              <div  className="absolute right-2 bottom-2 z-50 group-hover/item:block hidden ease-in-out transition">
+              <div  onClick={() => handleDownloadImage(item?.image)} className="absolute right-2 bottom-2 z-50 group-hover/item:block hidden ease-in-out transition">
                 <button  className="inline-flex items-center px-2">
                   <MdDownload
-                    onClick={() => handleDownloadImage(item?.image)}
+                   
                     size={32}
                     className="mr-1 text-gray-700"
                   />
