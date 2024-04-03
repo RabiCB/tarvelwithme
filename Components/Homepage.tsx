@@ -48,7 +48,9 @@ function MyVerticallyCenteredModal(props: any) {
 }
 function Items({ currentItems }: Iprops) {
   const handleDownloadImage = (imageUrl: string) => {
-    fetch(imageUrl)
+    fetch(imageUrl,{
+      referrerPolicy: "unsafe-url" ,
+    })
       .then((response) => response.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);
