@@ -42,7 +42,7 @@ function MyVerticallyCenteredModal(props: any) {
       </div>
 
       <div className="w-full  min-h-[400px]  rounded-full">
-        <img src={props?.img} className="w-full min-h-[400px] object-contain max-sm:object-cover" />
+        <img src={props?.img} className="w-full min-h-[400px] object-contain max-md:object-cover" />
       </div>
     </Modal>
   );
