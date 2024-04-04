@@ -30,18 +30,19 @@ function MyVerticallyCenteredModal(props: any) {
       onEscapeKeyDown={props?.close}
       className="rounded-lg"
       contentClassName="rounded-lg"
+     
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <div
         onClick={props?.close}
-        className="h-10 w-10  absolute cursor-pointer  right-[-60px] "
+        className="h-10 w-10  absolute cursor-pointer  right-[-60px] max-md:right-[-0px] "
       >
         <IoMdClose size={32}  color="white" className="z-50 " />
       </div>
 
-      <div className="w-full  min-h-[400px] rounded-full">
-        <img src={props?.img} className="w-full min-h-[400px] object-contain" />
+      <div className="w-full  min-h-[400px]  rounded-full">
+        <img src={props?.img} className="w-full min-h-[400px] object-contain max-sm:object-cover" />
       </div>
     </Modal>
   );
@@ -83,7 +84,7 @@ function Items({ currentItems }: Iprops) {
           img={selected}
         />
       )}
-      <div className="grid grid-cols-3 gap-8 max-lg:grid-cols-2 w-full p-4">
+      <div className="grid grid-cols-3 gap-8 max-lg:grid-cols-2 w-full p-4 max-sm:grid-cols-1">
         {currentItems &&
           currentItems.map((item) => (
             <div
@@ -129,10 +130,10 @@ const Homepage = ({ data }: dataprops) => {
     window.scrollTo(0, 0);
   };
   return (
-    <div className="flex flex-col w-full relative ">
+    <div className="flex flex-col w-full relative  min-h-screen">
       <Items currentItems={currentItems} />
       <ReactPaginate
-        className="flex h-6 text-lg absolute bottom-[-30px] w-full  gap-8 justify-center items-center mb-4 "
+        className="flex h-6 text-lg absolute  bottom-[-30px] w-full  gap-8 justify-center items-center mb-4 "
         breakLabel="..."
         nextLabel={<GrNext size={18} />}
         onPageChange={handlePageClick}
