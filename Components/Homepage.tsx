@@ -89,7 +89,7 @@ function Items({ currentItems }: Iprops) {
           currentItems.map((item) => (
             <div
              
-              className="group/item relative"
+              className="group/item relative cursor-pointer"
               key={item?._id}
             >
               <img
@@ -99,7 +99,7 @@ function Items({ currentItems }: Iprops) {
               }}
                 alt={`image of ${item?.title}`}
                 src={item?.image ?? " "}
-                className="rounded-md object-cover w-full h-[280px]"
+                className="rounded-md object-cover w-full h-[280px] cursor-pointer"
               />
 
               <div  onClick={() => handleDownloadImage(item?.image)} className="absolute right-2 bottom-2 z-50 group-hover/item:block hidden ease-in-out transition">
@@ -132,6 +132,8 @@ const Homepage = ({ data }: dataprops) => {
   return (
     <div className="flex flex-col w-full relative  min-h-screen">
       <Items currentItems={currentItems} />
+
+     
       <ReactPaginate
         className="flex h-6 text-lg absolute  bottom-[-30px] w-full  gap-8 justify-center items-center mb-4 "
         breakLabel="..."
